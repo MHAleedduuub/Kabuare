@@ -1,0 +1,12 @@
+name = "verify"
+compatibility_date = "2024-09-23"
+
+[site]
+bucket = "./"
+
+[build]
+command = ""
+
+[vars]
+DISCORD_CLIENT_ID = "1508573653296746756"
+WEBSITE_URL = "https://verify.abukabaruh.kdns.fr"
