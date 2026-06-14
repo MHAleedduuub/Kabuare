@@ -1,0 +1,10 @@
+# Redirect all routes to index.html for SPA
+/*    /index.html   200
+
+# API redirects (if using Workers)
+# /api/*    https://abukabaruh.kdns.fr/api/:splat    200
+
+# Security redirects
+/.env     /404.html    404
+/node_modules/*     /404.html    404
+/package.json     /404.html    404
