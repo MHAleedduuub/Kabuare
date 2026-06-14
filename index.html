@@ -1,29 +1,875 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرحباً بالعالم</title>
+    <title>Minecraft Verification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --discord: #5865F2;
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(20, 20, 20, 0.9);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 20px;
             text-align: center;
-            background-color: #f5f5f5;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(76, 175, 80, 0.5));
         }
-        h1 {
-            color: #333;
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-        p {
-            color: #666;
+
+        .title {
+            color: var(--text-primary);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .step-container {
+            margin-top: 20px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.1);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .step-title {
+            color: var(--text-primary);
             font-size: 18px;
+            font-weight: 600;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        .minecraft-input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: 'Courier New', monospace;
+        }
+
+        .minecraft-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .minecraft-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-discord {
+            background: var(--discord);
+            color: white;
+        }
+
+        .btn-discord:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-verify {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-verify:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-logout {
+            background: #ff4757;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-logout:hover {
+            background: #ff3838;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+            font-weight: 500;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-success {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+
+        .alert-error {
+            background: rgba(255, 71, 87, 0.15);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            color: #ff4757;
+        }
+
+        .alert-info {
+            background: rgba(33, 150, 243, 0.15);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            color: #2196F3;
+        }
+
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.15);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+        }
+
+        .user-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .user-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .user-status {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .status-connected {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        .status-verified {
+            background: rgba(33, 150, 243, 0.15);
+            color: #2196F3;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+        }
+
+        .server-info {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .verification-code {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .code-text {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            color: var(--primary);
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        .minecraft-skin-preview {
+            width: 100%;
+            max-width: 120px;
+            margin: 0 auto 20px;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .user-card {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>مرحباً بكم في صفحتي</h1>
-    <p>هذه صفحة HTML بسيطة باللغة العربية</p>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-cube"></i>
+        </div>
+        
+        <h1 class="title">Minecraft Verification</h1>
+        <p class="subtitle">Link your Minecraft account with Discord</p>
+
+        <div id="alertBox" class="alert"></div>
+
+        <!-- Step 1: Discord Login -->
+        <div id="step1" class="step-container">
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Discord Login</div>
+                </div>
+                <p class="step-description">First, login with your Discord account to continue the verification process.</p>
+                <button class="btn btn-discord" onclick="loginWithDiscord()">
+                    <i class="fab fa-discord"></i>
+                    Login with Discord
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Verification -->
+        <div id="step2" class="step-container hidden">
+            <div class="user-card">
+                <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+                <div class="user-details">
+                    <div id="userName" class="user-name">Loading...</div>
+                    <span id="userStatus" class="user-status status-connected">
+                        <i class="fas fa-circle"></i> Connected
+                    </span>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Minecraft Username</div>
+                </div>
+                <p class="step-description">Enter your exact Minecraft Java Edition username for verification.</p>
+                
+                <div class="input-group">
+                    <label class="input-label">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-gamepad input-icon"></i>
+                        <input type="text" 
+                               id="minecraftUsername" 
+                               class="minecraft-input" 
+                               placeholder="Enter your username" 
+                               maxlength="16"
+                               autocomplete="off">
+                    </div>
+                </div>
+
+                <img id="skinPreview" class="minecraft-skin-preview hidden" src="" alt="Minecraft Skin">
+
+                <button id="verifyBtn" class="btn btn-verify" onclick="startVerification()">
+                    <i class="fas fa-check-circle"></i>
+                    Submit Verification
+                </button>
+
+                <div id="codeDisplay" class="verification-code hidden">
+                    <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 12px;">Your Verification Code</p>
+                    <div class="code-text" id="verificationCode"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <!-- Step 3: Pending Verification -->
+        <div id="step3" class="step-container hidden">
+            <div class="user-card">
+                <img id="userAvatar3" class="user-avatar" src="" alt="Avatar">
+                <div class="user-details">
+                    <div id="userName3" class="user-name">Loading...</div>
+                    <span class="user-status status-pending">
+                        <i class="fas fa-clock"></i> Pending Verification
+                    </span>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">Verification Submitted!</div>
+                </div>
+                <p class="step-description">
+                    Your verification request has been sent. Please wait for an admin to approve your verification.
+                    Join our Discord server to check the status.
+                </p>
+
+                <div id="codeDisplay3" class="verification-code">
+                    <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 12px;">Your Verification Code</p>
+                    <div class="code-text" id="verificationCode3"></div>
+                </div>
+
+                <button class="btn btn-discord" onclick="joinDiscord()" style="margin-top: 20px;">
+                    <i class="fab fa-discord"></i>
+                    Join Discord Server
+                </button>
+            </div>
+
+            <button class="btn btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <div class="server-info">
+            <i class="fas fa-server"></i>
+            <span id="serverInfo">mc.yourserver.com</span>
+        </div>
+    </div>
+
+    <script>
+        // ========== Configuration ==========
+        const CONFIG = {
+            discordClientId: 'YOUR_DISCORD_CLIENT_ID_HERE',
+            redirectUri: window.location.origin + window.location.pathname,
+            discordInviteUrl: 'https://discord.gg/yourserver',
+            serverIp: 'mc.yourserver.com',
+            serverName: 'Your Server'
+        };
+
+        // ========== Local Storage Keys ==========
+        const STORAGE_KEYS = {
+            DISCORD_USER: 'mc_verify_discord_user',
+            DISCORD_TOKEN: 'mc_verify_discord_token',
+            MINECRAFT_USERNAME: 'mc_verify_minecraft_username',
+            VERIFICATION_CODE: 'mc_verify_code',
+            VERIFICATION_STATUS: 'mc_verify_status',
+            VERIFICATION_DATE: 'mc_verify_date'
+        };
+
+        // ========== Initialize ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('serverInfo').textContent = 
+                `${CONFIG.serverName} - ${CONFIG.serverIp}`;
+            
+            checkStoredSession();
+        });
+
+        // ========== Session Management ==========
+        function checkStoredSession() {
+            const storedUser = localStorage.getItem(STORAGE_KEYS.DISCORD_USER);
+            const storedToken = localStorage.getItem(STORAGE_KEYS.DISCORD_TOKEN);
+            const storedStatus = localStorage.getItem(STORAGE_KEYS.VERIFICATION_STATUS);
+
+            if (storedUser && storedToken) {
+                const user = JSON.parse(storedUser);
+                
+                if (storedStatus === 'pending') {
+                    displayPendingVerification(user);
+                } else if (storedStatus === 'verified') {
+                    displayVerifiedUser(user);
+                } else {
+                    displayUserInfo(user);
+                    showStep2();
+                }
+            } else {
+                checkUrlHash();
+            }
+        }
+
+        function checkUrlHash() {
+            const hash = window.location.hash;
+            if (hash) {
+                const params = new URLSearchParams(hash.substring(1));
+                const accessToken = params.get('access_token');
+                const tokenType = params.get('token_type');
+                
+                if (accessToken) {
+                    localStorage.setItem(STORAGE_KEYS.DISCORD_TOKEN, accessToken);
+                    window.location.hash = '';
+                    fetchDiscordUser(accessToken);
+                }
+            }
+        }
+
+        // ========== Discord Authentication ==========
+        function loginWithDiscord() {
+            const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${CONFIG.discordClientId}&redirect_uri=${encodeURIComponent(CONFIG.redirectUri)}&response_type=token&scope=identify`;
+            window.location.href = authUrl;
+        }
+
+        async function fetchDiscordUser(token) {
+            try {
+                showLoading('verifyBtn');
+                
+                const response = await fetch('https://discord.com/api/users/@me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    
+                    // Save to localStorage
+                    localStorage.setItem(STORAGE_KEYS.DISCORD_USER, JSON.stringify(user));
+                    localStorage.setItem(STORAGE_KEYS.DISCORD_TOKEN, token);
+                    
+                    displayUserInfo(user);
+                    showStep2();
+                } else {
+                    clearSession();
+                    showStep1();
+                    showAlert('Failed to authenticate with Discord. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error fetching Discord user:', error);
+                showAlert('Error connecting to Discord. Please check your connection.', 'error');
+            } finally {
+                hideLoading('verifyBtn');
+            }
+        }
+
+        // ========== UI Display Functions ==========
+        function displayUserInfo(user) {
+            const avatarUrl = user.avatar 
+                ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+                : 'https://cdn.discordapp.com/embed/avatars/0.png?size=128';
+            
+            // Update step 2
+            document.getElementById('userAvatar').src = avatarUrl;
+            document.getElementById('userName').textContent = `${user.username}#${user.discriminator}`;
+            
+            // Update step 3
+            const avatar3 = document.getElementById('userAvatar3');
+            const name3 = document.getElementById('userName3');
+            if (avatar3) avatar3.src = avatarUrl;
+            if (name3) name3.textContent = `${user.username}#${user.discriminator}`;
+        }
+
+        function displayPendingVerification(user) {
+            const storedUsername = localStorage.getItem(STORAGE_KEYS.MINECRAFT_USERNAME);
+            const storedCode = localStorage.getItem(STORAGE_KEYS.VERIFICATION_CODE);
+            
+            displayUserInfo(user);
+            showStep3();
+            
+            if (storedCode) {
+                document.getElementById('verificationCode3').textContent = storedCode;
+            }
+        }
+
+        function displayVerifiedUser(user) {
+            displayUserInfo(user);
+            // You can add a verified state UI here
+        }
+
+        function showStep1() {
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+        }
+
+        function showStep2() {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            document.getElementById('step3').classList.add('hidden');
+        }
+
+        function showStep3() {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+        }
+
+        // ========== Verification Process ==========
+        function startVerification() {
+            const username = document.getElementById('minecraftUsername').value.trim();
+            
+            if (!username) {
+                showAlert('Please enter your Minecraft username.', 'error');
+                return;
+            }
+
+            if (username.length < 3 || username.length > 16) {
+                showAlert('Username must be between 3 and 16 characters.', 'error');
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                showAlert('Username can only contain letters, numbers, and underscores.', 'error');
+                return;
+            }
+
+            // Generate verification code
+            const verificationCode = generateVerificationCode();
+            
+            // Save to localStorage
+            localStorage.setItem(STORAGE_KEYS.MINECRAFT_USERNAME, username);
+            localStorage.setItem(STORAGE_KEYS.VERIFICATION_CODE, verificationCode);
+            localStorage.setItem(STORAGE_KEYS.VERIFICATION_STATUS, 'pending');
+            localStorage.setItem(STORAGE_KEYS.VERIFICATION_DATE, new Date().toISOString());
+
+            // Update UI
+            document.getElementById('verificationCode').textContent = verificationCode;
+            document.getElementById('codeDisplay').classList.remove('hidden');
+            document.getElementById('verificationCode3').textContent = verificationCode;
+            
+            // Show success and switch to step 3
+            showAlert('✅ Verification request submitted successfully!', 'success');
+            
+            setTimeout(() => {
+                showStep3();
+            }, 1500);
+
+            // Send webhook or API call here if needed
+            sendVerificationToDiscord(username, verificationCode);
+        }
+
+        function generateVerificationCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // ========== Discord Integration ==========
+        function sendVerificationToDiscord(username, code) {
+            // This function would send data to your Discord bot via webhook or API
+            // Since we're on Cloudflare Pages (static), you'd need a serverless function or external API
+            
+            const verificationData = {
+                username: username,
+                code: code,
+                discordUser: JSON.parse(localStorage.getItem(STORAGE_KEYS.DISCORD_USER)),
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Verification data:', verificationData);
+            
+            // If you have a webhook URL, you can send it here
+            // fetch('YOUR_WEBHOOK_URL', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(verificationData)
+            // });
+        }
+
+        function joinDiscord() {
+            window.open(CONFIG.discordInviteUrl, '_blank');
+        }
+
+        // ========== Session Management ==========
+        function logout() {
+            clearSession();
+            showStep1();
+            document.getElementById('minecraftUsername').value = '';
+            document.getElementById('codeDisplay').classList.add('hidden');
+            hideAlert();
+            showAlert('Logged out successfully.', 'info');
+        }
+
+        function clearSession() {
+            Object.values(STORAGE_KEYS).forEach(key => {
+                localStorage.removeItem(key);
+            });
+        }
+
+        // ========== UI Helpers ==========
+        function showAlert(message, type = 'info') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                hideAlert();
+            }, 5000);
+        }
+
+        function hideAlert() {
+            document.getElementById('alertBox').style.display = 'none';
+        }
+
+        function showLoading(buttonId) {
+            const btn = document.getElementById(buttonId);
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading-spinner"></span> Loading...';
+            }
+        }
+
+        function hideLoading(buttonId) {
+            const btn = document.getElementById(buttonId);
+            if (btn) {
+                btn.disabled = false;
+                const icon = buttonId === 'verifyBtn' ? 
+                    '<i class="fas fa-check-circle"></i>' : 
+                    '<i class="fab fa-discord"></i>';
+                btn.innerHTML = `${icon} ${buttonId === 'verifyBtn' ? 'Submit Verification' : 'Login with Discord'}`;
+            }
+        }
+
+        // ========== Minecraft Skin Preview ==========
+        document.getElementById('minecraftUsername').addEventListener('input', function(e) {
+            const username = e.target.value.trim();
+            const skinPreview = document.getElementById('skinPreview');
+            
+            if (username.length >= 3) {
+                skinPreview.src = `https://minotar.net/armor/body/${username}/100.png`;
+                skinPreview.classList.remove('hidden');
+            } else {
+                skinPreview.classList.add('hidden');
+            }
+        });
+
+        // ========== Keyboard Shortcuts ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const activeStep = document.querySelector('.step-container:not(.hidden)');
+                if (activeStep && activeStep.id === 'step2') {
+                    startVerification();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
